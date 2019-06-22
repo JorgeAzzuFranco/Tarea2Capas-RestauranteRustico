@@ -23,7 +23,7 @@ public class Empleado {
 	@Column(name="estado")
 	Boolean estado;
 	@Column(name="id_sucursal")
-	String id_sucursal;
+	Integer id_sucursal;
 	public Integer getCodigo() {
 		return codigo;
 	}
@@ -54,10 +54,10 @@ public class Empleado {
 	public void setEstado(Boolean estado) {
 		this.estado = estado;
 	}
-	public String getId_sucursal() {
+	public Integer getId_sucursal() {
 		return id_sucursal;
 	}
-	public void setId_sucursal(String id_sucursal) {
+	public void setId_sucursal(Integer id_sucursal) {
 		this.id_sucursal = id_sucursal;
 	}
 

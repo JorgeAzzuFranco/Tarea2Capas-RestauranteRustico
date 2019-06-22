@@ -159,13 +159,88 @@ public class MainController {
 			mav.addObject("sucursales", getSucursales());
 			mav.setViewName("control");
 		}else {
-			mav.addObject("sucursal",sucursal);
-			mav.addObject("empleados", empleados);
-			mav.setViewName("editarSucursal");
+			mav.addObject("sucursales",getSucursales());
+			mav.setViewName("control");
 		}
+		
 		return mav;
 	}
+	
+//EDITAR-EMPLEADO----------------------------------------------------
+	
+	@RequestMapping("/editarEmpleado")
+	public ModelAndView editarEmpleado(@RequestParam("codigo") Integer codigo) {
+		
+		ModelAndView mav = new ModelAndView();
+		Empleado empleado = null;
+		List<Sucursal> sucursal = null;
+		
+		try {
+			empleado = empDao.findOne(codigo);
+			sucursal = sucDao.findAll();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		mav.addObject("empleado", empleado);
+		mav.addObject("sucursal", sucursal);
+		mav.setViewName("editarEmpleado");
+		return mav;
+		
+	}
 
+//ACTUALIZAR-EMPLEADO-(DENTRO-DE-EDITAR-EMPLEADO)--------------------
+	
+	@RequestMapping("/actualizarEmpleado")
+	public ModelAndView editarEmpleado(@ModelAttribute Empleado empleado) {
+		
+		ModelAndView mav = new ModelAndView();
+		Integer newRow = 1;
+		Sucursal sucursal = null;
+		List<Empleado> empleados = null;
+		if(empleado.getCodigo() != null) {
+			newRow = 0;
+		}
+		
+		try {
+			empDao.insert(empleado, newRow);
+			sucursal = sucDao.findOne(empleado.getId_sucursal());
+			empleados = empDao.findAll(empleado.getId_sucursal());
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		mav.addObject("empleados", empleados);
+		mav.addObject("sucursal", sucursal);
+		mav.setViewName("editarSucursal");
+		return mav;
+		
+	}
+	
+	
+//METODOS-RAPIDOS----------------------------------------------------	
+	@RequestMapping("/borrarEmpleado")
+	public ModelAndView borrarEmpleado(@RequestParam("codigo") Integer codigo, @RequestParam("id_sucursal") Integer id_sucursal) {
+		
+		ModelAndView mav = new ModelAndView();
+		Sucursal sucursal = null;
+		List<Empleado> empleados = null;
+		Integer borrado = 0;
+		try {
+			borrado = empDao.delete(codigo);
+			sucursal = sucDao.findOne(id_sucursal);
+			empleados = empDao.findAll(id_sucursal);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		mav.addObject("sucursal", sucursal);
+		mav.addObject("empleados", empleados);
+		mav.setViewName("editarSucursal");
+		return mav;
+		
+	}
+	
 //METODOS-RAPIDOS----------------------------------------------------
 	
 	private List<Sucursal> getSucursales() {

@@ -57,7 +57,7 @@
 					<td>${empleado.estado}</td>
 					<td>
 						<button onclick="location.href='${pageContext.request.contextPath}/editarEmpleado?codigo=${empleado.codigo}'">Ver Perfil</button>
-						<button onclick="location.href='${pageContext.request.contextPath}/borrarEmpleado?codigo=${empleado.codigo}'">Eliminar</button>
+						<button onclick="location.href='${pageContext.request.contextPath}/borrarEmpleado?codigo=${empleado.codigo}&id_sucursal=${sucursal.codigo}'">Eliminar</button>
 					</td>
 				</tr>
 			</c:forEach>
