@@ -29,7 +29,7 @@
 					<td>${sucursales.horarioFin}</td>
 					<td>
 						<button onclick="location.href='${pageContext.request.contextPath}/editarSucursal?codigo=${sucursales.codigo}'">Ver Perfil</button>
-						<button onclick="location.href='${pageContext.request.contextPath}/borrar?codigo=${sucursales.codigo}'">Eliminar</button>
+						<button onclick="location.href='${pageContext.request.contextPath}/borrarSucursal?codigo=${sucursales.codigo}'">Eliminar</button>
 					</td>
 				</tr>
 			</c:forEach>

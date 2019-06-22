@@ -28,7 +28,9 @@ public class MainController {
 	private SucursalDAO sucDao;
 	@Autowired
 	private EmpleadoDAO empDao;
-	
+
+//MAIN-PAGE------------------------------------------------------------------------
+
 	@RequestMapping("/")
 	public ModelAndView initMain() {
 		ModelAndView mav = new ModelAndView();
@@ -37,6 +39,8 @@ public class MainController {
 		mav.setViewName("main");
 		return mav;
 	}
+	
+//LOG-IN------------------------------------------------------------------------------
 	
 	@RequestMapping("/login")
 	public ModelAndView buscar(String usuario, String clave) {
@@ -70,6 +74,8 @@ public class MainController {
 		return mav;
 	}
 	
+//EDITAR-SUCURSAL---------------------------------------------------------------------
+
 	@RequestMapping("/editarSucursal")
 	public ModelAndView editarSucursal(@RequestParam("codigo") Integer codigo) {
 		ModelAndView mav = new ModelAndView();
@@ -88,6 +94,33 @@ public class MainController {
 		mav.setViewName("editarSucursal");
 		return mav;
 	}
+	
+//GUARDAR-O-ACTUALIZAR-SUCURSAL-------------------------------------------------------
+	@RequestMapping("/actualizarSucursal")
+	public ModelAndView actualizarSucursal(@ModelAttribute Sucursal sucursal) {
+		
+		ModelAndView mav = new ModelAndView();
+		Integer newRow = 1;
+		List<Empleado> empleados = null;
+		
+		if(sucursal.getCodigo() != null) {
+			newRow = 0;
+		}
+		
+		try {
+			sucDao.insert(sucursal, newRow);
+			sucursal = sucDao.findOne(sucursal.getCodigo());
+			empleados = empDao.findAll(sucursal.getCodigo());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		mav.addObject("sucursal",sucursal);
+		mav.addObject("empleados", empleados);
+		mav.setViewName("editarSucursal");
+		return mav;
+	}
+
 	
 	/*@RequestMapping(value="/save", method=RequestMethod.POST)
 	public ModelAndView save() {

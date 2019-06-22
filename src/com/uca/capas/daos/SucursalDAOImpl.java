@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
@@ -31,14 +32,21 @@ public class SucursalDAOImpl implements SucursalDAO {
 	@Override
 	public Sucursal findOne(Integer codigo) {
 		Sucursal sucursal = em.find(Sucursal.class, codigo);
-		return sucursal;
-		
+		return sucursal; 		
 	}
 
 	@Override
-	public int insert(Sucursal sucursal) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return 0;
+	@Transactional
+	public int insert(Sucursal sucursal, Integer newRow) throws DataAccessException {
+		try {
+			if(newRow == 1) em.persist(sucursal);
+			else em.merge(sucursal);
+			em.flush();
+			return 1;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 
 	@Override
