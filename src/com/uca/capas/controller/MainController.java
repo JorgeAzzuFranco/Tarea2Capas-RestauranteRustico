@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.uca.capas.daos.EmpleadoDAO;
 import com.uca.capas.daos.StudentDAO;
 import com.uca.capas.daos.SucursalDAO;
 import com.uca.capas.daos.UsuarioDAO;
+import com.uca.capas.domain.Empleado;
 import com.uca.capas.domain.Student;
 import com.uca.capas.domain.Sucursal;
 import com.uca.capas.domain.Usuario;
@@ -21,9 +23,11 @@ import com.uca.capas.domain.Usuario;
 public class MainController {
 	
 	@Autowired
-	private StudentDAO studentDao;
 	private UsuarioDAO userDao;
+	@Autowired
 	private SucursalDAO sucDao;
+	@Autowired
+	private EmpleadoDAO empDao;
 	
 	@RequestMapping("/")
 	public ModelAndView initMain() {
@@ -47,21 +51,41 @@ public class MainController {
 			e.printStackTrace();
 		}
 		if(admin == 1) {
-			/*List<Sucursal> sucursales = sucDao.findAll();
+			List<Sucursal> sucursales = null;
 			
 			try {
-				
+				sucursales = sucDao.findAll();
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 			
-			mav.addObject("sucursales", sucursales);*/
+			mav.addObject("sucursales", sucursales);
 			mav.setViewName("control");
 		}
 		else {
+			mav.addObject("usuario", user);
 			mav.setViewName("main");
 		}
 		
+		return mav;
+	}
+	
+	@RequestMapping("/editarSucursal")
+	public ModelAndView editarSucursal(@RequestParam("codigo") Integer codigo) {
+		ModelAndView mav = new ModelAndView();
+		
+		Sucursal sucursal = null;
+		List<Empleado> empleados = null;
+		try {
+			sucursal = sucDao.findOne(codigo);
+			empleados = empDao.findAll(codigo);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		mav.addObject("sucursal",sucursal);
+		mav.addObject("empleados", empleados);
+		mav.setViewName("editarSucursal");
 		return mav;
 	}
 	

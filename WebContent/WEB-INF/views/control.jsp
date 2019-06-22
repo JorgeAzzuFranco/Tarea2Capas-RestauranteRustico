@@ -27,7 +27,10 @@
 					<td>${sucursales.ubicacion}</td>
 					<td>${sucursales.horarioInicio}</td>
 					<td>${sucursales.horarioFin}</td>
-					<td></td>
+					<td>
+						<button onclick="location.href='${pageContext.request.contextPath}/editarSucursal?codigo=${sucursales.codigo}'">Ver Perfil</button>
+						<button onclick="location.href='${pageContext.request.contextPath}/borrar?codigo=${sucursales.codigo}'">Eliminar</button>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

@@ -10,5 +10,6 @@ public interface SucursalDAO {
 	public List<Sucursal> findAll() throws DataAccessException;
 	public int insert(Sucursal sucursal) throws DataAccessException;
 	public int delete(int id) throws DataAccessException;
+	public Sucursal findOne(Integer codigo);
 	
 }

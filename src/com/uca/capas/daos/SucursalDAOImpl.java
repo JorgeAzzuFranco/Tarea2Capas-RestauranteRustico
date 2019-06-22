@@ -26,6 +26,14 @@ public class SucursalDAOImpl implements SucursalDAO {
 		List<Sucursal> sucursales = query.getResultList();
 		return sucursales;
 	}
+	
+	//No probada aun
+	@Override
+	public Sucursal findOne(Integer codigo) {
+		Sucursal sucursal = em.find(Sucursal.class, codigo);
+		return sucursal;
+		
+	}
 
 	@Override
 	public int insert(Sucursal sucursal) throws DataAccessException {
