@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.uca.capas.daos.EmpleadoDAO;
-import com.uca.capas.daos.StudentDAO;
 import com.uca.capas.daos.SucursalDAO;
 import com.uca.capas.daos.UsuarioDAO;
 import com.uca.capas.domain.Empleado;
-import com.uca.capas.domain.Student;
 import com.uca.capas.domain.Sucursal;
 import com.uca.capas.domain.Usuario;
 
@@ -33,17 +31,20 @@ public class MainController {
 
 	@RequestMapping("/")
 	public ModelAndView initMain() {
+		
 		ModelAndView mav = new ModelAndView();
 		Usuario u = new Usuario();
 		mav.addObject("usuario",u);
 		mav.setViewName("main");
 		return mav;
+		
 	}
 	
 //LOG-IN------------------------------------------------------------------------------
 	
 	@RequestMapping("/login")
 	public ModelAndView buscar(String usuario, String clave) {
+		
 		ModelAndView mav = new ModelAndView();
 		
 		Usuario user = new Usuario(usuario, clave);
@@ -58,7 +59,7 @@ public class MainController {
 			List<Sucursal> sucursales = null;
 			
 			try {
-				sucursales = sucDao.findAll();
+				sucursales = getSucursales();
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -72,16 +73,19 @@ public class MainController {
 		}
 		
 		return mav;
+		
 	}
 	
-//EDITAR-SUCURSAL---------------------------------------------------------------------
+//EDITAR-SUCURSAL-(CENTRO-DE-CONTROL)--------------------------------------------
 
 	@RequestMapping("/editarSucursal")
 	public ModelAndView editarSucursal(@RequestParam("codigo") Integer codigo) {
+		
 		ModelAndView mav = new ModelAndView();
 		
 		Sucursal sucursal = null;
 		List<Empleado> empleados = null;
+		
 		try {
 			sucursal = sucDao.findOne(codigo);
 			empleados = empDao.findAll(codigo);
@@ -93,9 +97,45 @@ public class MainController {
 		mav.addObject("empleados", empleados);
 		mav.setViewName("editarSucursal");
 		return mav;
+		
 	}
 	
-//GUARDAR-O-ACTUALIZAR-SUCURSAL-------------------------------------------------------
+//ELIMINAR-SUCURSAL-(CENTRO-DE-CONTROL)-------------------------------------------
+	
+	@RequestMapping("/borrarSucursal")
+	public ModelAndView borrarSucursal(@RequestParam("codigo") Integer codigo) {
+		
+		ModelAndView mav = new ModelAndView();
+		List<Sucursal> sucursales = null;
+		Integer borrado = 0;
+		try {
+			borrado = sucDao.delete(codigo);
+			sucursales = getSucursales();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		mav.addObject("sucursales", sucursales);
+		mav.setViewName("control");
+		return mav;
+		
+	}
+	
+//AGREGAR-SUCURSAL-(CENTRO-DE-CONTROL)-------------------------------------------
+	@RequestMapping("/agregarSucursal")
+	public ModelAndView agregarSucursal() {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		Sucursal sucursal = new Sucursal();
+		
+		mav.addObject("sucursal",sucursal);
+		mav.setViewName("editarSucursal");
+		return mav;
+	
+	}
+//GUARDAR-O-ACTUALIZAR-SUCURSAL-(DENTRO-DE-EDITAR-SUCURSAL)-----------------------
+	
 	@RequestMapping("/actualizarSucursal")
 	public ModelAndView actualizarSucursal(@ModelAttribute Sucursal sucursal) {
 		
@@ -115,70 +155,28 @@ public class MainController {
 			e.printStackTrace();
 		}
 		
-		mav.addObject("sucursal",sucursal);
-		mav.addObject("empleados", empleados);
-		mav.setViewName("editarSucursal");
-		return mav;
-	}
-
-	
-	/*@RequestMapping(value="/save", method=RequestMethod.POST)
-	public ModelAndView save() {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("student", new Student());
-		mav.setViewName("form");
-		
-		return mav;
-	}
-	
-	@RequestMapping(value="/formData", method=RequestMethod.POST)
-	public ModelAndView formData(@ModelAttribute Student s) {
-		ModelAndView mav = new ModelAndView();
-		List<Student> students = null;
-		
-		int cond;
-		if(s.getcStudent() != null) cond = 0;
-		else cond = 1;
-
-		try {
-			studentDao.save(s, cond);
-		}catch(Exception w) {
-			w.printStackTrace();
+		if(newRow == 1) {
+			mav.addObject("sucursales", getSucursales());
+			mav.setViewName("control");
+		}else {
+			mav.addObject("sucursal",sucursal);
+			mav.addObject("empleados", empleados);
+			mav.setViewName("editarSucursal");
 		}
-		students = studentDao.findAll();
-		mav.addObject("students", students);
-		mav.setViewName("main");
-		
 		return mav;
 	}
+
+//METODOS-RAPIDOS----------------------------------------------------
 	
-	@RequestMapping(value="/editar", method=RequestMethod.GET)
-	public ModelAndView formData2(@RequestParam("cStudent") String Code) {
-		ModelAndView mav = new ModelAndView();
-		Student s = null;
-		Integer code = Integer.parseInt(Code);
+	private List<Sucursal> getSucursales() {
+		List<Sucursal> sucursales = null;
+		
 		try {
-			s = studentDao.findOne(code);
+		sucursales = sucDao.findAll();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		mav.addObject("student", s);
-		mav.setViewName("form2");
-		return mav;
+		return sucursales;
 	}
-	
-	@RequestMapping(value="/eliminar", method=RequestMethod.GET)
-	public ModelAndView eliminar(@RequestParam("cStudent") String Code) {
-		ModelAndView mav = new ModelAndView();
-		Integer code = Integer.parseInt(Code);
-		try {
-			studentDao.delete(code);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		mav.setViewName("main");
-		return mav;
-	}*/
 }

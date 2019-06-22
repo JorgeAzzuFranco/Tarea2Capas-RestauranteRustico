@@ -28,11 +28,10 @@ public class SucursalDAOImpl implements SucursalDAO {
 		return sucursales;
 	}
 	
-	//No probada aun
 	@Override
 	public Sucursal findOne(Integer codigo) {
 		Sucursal sucursal = em.find(Sucursal.class, codigo);
-		return sucursal; 		
+		return sucursal;
 	}
 
 	@Override
@@ -50,9 +49,19 @@ public class SucursalDAOImpl implements SucursalDAO {
 	}
 
 	@Override
-	public int delete(int id) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return 0;
+	@Transactional
+	public int delete(int codigo) throws DataAccessException {
+		StringBuffer sb = new StringBuffer();
+		sb.append("DELETE FROM public.sucursal WHERE codigo = :c");
+		Query query = em.createNativeQuery(sb.toString(), Sucursal.class);
+		query.setParameter("c", codigo);
+		
+		if(query.executeUpdate() != 0) {
+			return 1;
+		}else {
+			return 0;
+		}
+		
 	}
 
 }

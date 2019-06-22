@@ -10,6 +10,12 @@
 <body>
 	<h1>Centro de control de sucursales</h1>
 	
+	<!-- FALTA AÑADIR SUCURSAL -->
+	<form action="${pageContext.request.contextPath}/agregarSucursal">
+		<input type="submit" value="Agregar Sucursal"/>
+	</form>
+	
+	
 	<div>
 		<table>
 			<thead>

@@ -36,30 +36,32 @@
 				
 	</form:form>
 	
-	<h2>Empleados de ${sucursal.nombre}</h2>
-	<table>
-			<thead>
+	<!-- FALTA AÑADIR EMPLEADO -->
+	<c:if test="${sucursal.codigo != null}">
+		<h2>Empleados de ${sucursal.nombre}</h2>
+		<table>
+				<thead>
+					<tr>
+						<td>Nombre Completo</td>
+						<td>Edad</td>
+						<td>G&eacute;nero</td>
+						<td>Estado</td>
+						<td>Acciones</td>
+					</tr>
+				</thead>
+			<c:forEach items="${empleados}" var="empleado">
 				<tr>
-					<td>Nombre Completo</td>
-					<td>Edad</td>
-					<td>G&eacute;nero</td>
-					<td>Estado</td>
-					<td>Acciones</td>
+					<td>${empleado.nombre}</td>
+					<td>${empleado.edad}</td>
+					<td>${empleado.genero}</td>
+					<td>${empleado.estado}</td>
+					<td>
+						<button onclick="location.href='${pageContext.request.contextPath}/editarEmpleado?codigo=${empleado.codigo}'">Ver Perfil</button>
+						<button onclick="location.href='${pageContext.request.contextPath}/borrarEmpleado?codigo=${empleado.codigo}'">Eliminar</button>
+					</td>
 				</tr>
-			</thead>
-		<c:forEach items="${empleados}" var="empleado">
-			<tr>
-				<td>${empleado.nombre}</td>
-				<td>${empleado.edad}</td>
-				<td>${empleado.genero}</td>
-				<td>${empleado.estado}</td>
-				<td>
-					<button onclick="location.href='${pageContext.request.contextPath}/editarEmpleado?codigo=${empleado.codigo}'">Ver Perfil</button>
-					<button onclick="location.href='${pageContext.request.contextPath}/borrarEmpleado?codigo=${empleado.codigo}'">Eliminar</button>
-				</td>
-			</tr>
-		</c:forEach>
-	</table>
-	
+			</c:forEach>
+		</table>
+	</c:if>
 </body>
 </html>
