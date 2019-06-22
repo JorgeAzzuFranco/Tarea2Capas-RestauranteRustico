@@ -37,6 +37,11 @@
 	</form:form>
 	
 	<!-- FALTA AÑADIR EMPLEADO -->
+	
+	<button onClick="location.href='${pageContext.request.contextPath}/agregarEmpleado?id_sucursal=${sucursal.codigo}'">
+		Agregar Empleado
+	</button>
+	
 	<c:if test="${sucursal.codigo != null}">
 		<h2>Empleados de ${sucursal.nombre}</h2>
 		<table>

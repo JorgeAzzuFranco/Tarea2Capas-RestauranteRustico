@@ -2,7 +2,10 @@ package com.uca.capas.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -10,8 +13,8 @@ import javax.persistence.Table;
 public class Empleado {
 
 	@Id
-	//@GeneratedValue(generator="sucursal_codigo_seq", strategy = GenerationType.AUTO)
-	//@SequenceGenerator(name = "sucursal_codigo_seq", sequenceName = "public.sucursal_codigo_seq")
+	@GeneratedValue(generator="usuario_id_usuario_seq", strategy = GenerationType.AUTO)
+	@SequenceGenerator(name = "public.usuario_id_usuario_seq", sequenceName = "public.usuario_id_usuario_seq")
 	@Column(name="codigo")
 	Integer codigo;
 	@Column(name="nombre")

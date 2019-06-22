@@ -241,6 +241,24 @@ public class MainController {
 		
 	}
 	
+//AÑADIR-EMPLEADOS---------------------------------------------------
+	
+	@RequestMapping("/agregarEmpleado")
+	public ModelAndView agregarEmpleado(@RequestParam("id_sucursal") Integer id_sucursal) {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		Empleado empleado = new Empleado();
+		empleado.setId_sucursal(id_sucursal);
+		List<Sucursal> sucursales = getSucursales();
+				
+		mav.addObject("empleado",empleado);
+		mav.addObject("sucursal", sucursales);
+		mav.setViewName("editarEmpleado");
+		return mav;
+	
+	}
+	
 //METODOS-RAPIDOS----------------------------------------------------
 	
 	private List<Sucursal> getSucursales() {
