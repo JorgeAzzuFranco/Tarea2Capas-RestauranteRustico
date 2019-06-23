@@ -22,7 +22,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		Query query = em.createNativeQuery(sb.toString(), Usuario.class);
 		query.setParameter("u", user.getUsuario());
 		query.setParameter("c", user.getClave());
-		if(query.getResultList() != null) {
+		if(query.getResultList().isEmpty() == false) {
 			return 1;
 		}else {
 			return 0;

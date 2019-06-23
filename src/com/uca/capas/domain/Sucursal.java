@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(schema="public",name="sucursal")
@@ -17,16 +20,22 @@ public class Sucursal {
 	@Column(name="codigo")
 	Integer codigo;
 	@Column(name="nombre")
+	@NotBlank
 	String nombre;
 	@Column(name="ubicacion")
+	@NotBlank
 	String ubicacion;
 	@Column(name="nmesa")
+	@Min(value = 1, message = "El valor minimo de mesas es 1")
 	Integer nMesa;
 	@Column(name="nomgerente")
+	@NotBlank
 	String nomGerente;
 	@Column(name="horario_ini")
+	@Pattern(regexp="([0-9]|1[0-9]|2[0-4]):[0-5][0-9]")
 	String horarioInicio;
 	@Column(name="horario_fin")
+	@Pattern(regexp="([0-9]|1[0-9]|2[0-4]):[0-5][0-9]")
 	String horarioFin;
 	
 	public Sucursal() {

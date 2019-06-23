@@ -2,11 +2,13 @@ package com.uca.capas.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
- import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,33 +45,34 @@ public class MainController {
 //LOG-IN------------------------------------------------------------------------------
 	
 	@RequestMapping("/login")
-	public ModelAndView buscar(String usuario, String clave) {
+	public ModelAndView buscar(@Valid @ModelAttribute Usuario user, BindingResult br) {
 		
 		ModelAndView mav = new ModelAndView();
 		
-		Usuario user = new Usuario(usuario, clave);
-		int admin = 0;
-		
-		try {
-			admin = userDao.findUser(user);
-		}catch(Exception e) {
-			e.printStackTrace();
+		if(br.hasErrors()) {
+			mav.addObject("usuario",user);
+			mav.setViewName("main");
 		}
-		if(admin == 1) {
-			List<Sucursal> sucursales = null;
+		else {
+			//Usuario user = new Usuario(usuario, clave);
+			int admin = 0;
 			
 			try {
-				sucursales = getSucursales();
+				admin = userDao.findUser(user);
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
-			
-			mav.addObject("sucursales", sucursales);
-			mav.setViewName("control");
-		}
-		else {
-			mav.addObject("usuario", user);
-			mav.setViewName("main");
+			if(admin == 1) {
+				List<Sucursal> sucursales = null;
+				sucursales = getSucursales();
+				
+				mav.addObject("sucursales", sucursales);
+				mav.setViewName("control");
+			}
+			else {
+				mav.addObject("usuario", user);
+				mav.setViewName("main");
+			}
 		}
 		
 		return mav;
@@ -137,32 +140,36 @@ public class MainController {
 //GUARDAR-O-ACTUALIZAR-SUCURSAL-(DENTRO-DE-EDITAR-SUCURSAL)-----------------------
 	
 	@RequestMapping("/actualizarSucursal")
-	public ModelAndView actualizarSucursal(@ModelAttribute Sucursal sucursal) {
+	public ModelAndView actualizarSucursal(@Valid @ModelAttribute Sucursal sucursal, BindingResult br) {
 		
 		ModelAndView mav = new ModelAndView();
-		Integer newRow = 1;
-		List<Empleado> empleados = null;
-		
-		if(sucursal.getCodigo() != null) {
-			newRow = 0;
-		}
-		
-		try {
-			sucDao.insert(sucursal, newRow);
-			sucursal = sucDao.findOne(sucursal.getCodigo());
-			empleados = empDao.findAll(sucursal.getCodigo());
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		if(newRow == 1) {
-			mav.addObject("sucursales", getSucursales());
-			mav.setViewName("control");
+		if(br.hasErrors()) {
+			mav.addObject("sucursal", sucursal);
+			mav.setViewName("editarSucursal");
 		}else {
-			mav.addObject("sucursales",getSucursales());
-			mav.setViewName("control");
+			Integer newRow = 1;
+			List<Empleado> empleados = null;
+			
+			if(sucursal.getCodigo() != null) {
+				newRow = 0;
+			}
+			
+			try {
+				sucDao.insert(sucursal, newRow);
+				sucursal = sucDao.findOne(sucursal.getCodigo());
+				empleados = empDao.findAll(sucursal.getCodigo());
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			if(newRow == 1) {
+				mav.addObject("sucursales", getSucursales());
+				mav.setViewName("control");
+			}else {
+				mav.addObject("sucursales",getSucursales());
+				mav.setViewName("control");
+			}
 		}
-		
 		return mav;
 	}
 	
@@ -192,29 +199,35 @@ public class MainController {
 //ACTUALIZAR-EMPLEADO-(DENTRO-DE-EDITAR-EMPLEADO)--------------------
 	
 	@RequestMapping("/actualizarEmpleado")
-	public ModelAndView editarEmpleado(@ModelAttribute Empleado empleado) {
+	public ModelAndView editarEmpleado(@Valid @ModelAttribute Empleado empleado, BindingResult br) {
 		
 		ModelAndView mav = new ModelAndView();
-		Integer newRow = 1;
-		Sucursal sucursal = null;
-		List<Empleado> empleados = null;
-		if(empleado.getCodigo() != null) {
-			newRow = 0;
-		}
 		
-		try {
-			empDao.insert(empleado, newRow);
-			sucursal = sucDao.findOne(empleado.getId_sucursal());
-			empleados = empDao.findAll(empleado.getId_sucursal());
-		}catch (Exception e) {
-			e.printStackTrace();
+		if(br.hasErrors()) {
+			mav.addObject("empleado", empleado);
+			mav.setViewName("editarEmpleado");
 		}
-		
-		mav.addObject("empleados", empleados);
-		mav.addObject("sucursal", sucursal);
-		mav.setViewName("editarSucursal");
+		else {
+			Integer newRow = 1;
+			Sucursal sucursal = null;
+			List<Empleado> empleados = null;
+			if(empleado.getCodigo() != null) {
+				newRow = 0;
+			}
+			
+			try {
+				empDao.insert(empleado, newRow);
+				sucursal = sucDao.findOne(empleado.getId_sucursal());
+				empleados = empDao.findAll(empleado.getId_sucursal());
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			mav.addObject("empleados", empleados);
+			mav.addObject("sucursal", sucursal);
+			mav.setViewName("editarSucursal");
+		}
 		return mav;
-		
 	}
 	
 	

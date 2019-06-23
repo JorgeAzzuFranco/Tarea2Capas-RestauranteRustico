@@ -17,21 +17,39 @@
 			<input class="form-control" type="hidden" name="codigo" path="codigo" value="${empleado.codigo}">
 			
 			<label for="nombre">Nombre de empleado:</label>
-			<input class="form-control" type="text" name="nombre" path="nombre" value="${empleado.nombre}"/>
+			<form:errors path="nombre" cssStyle="color: #ff0000;" />
+			<input class="form-control" type="text" name="nombre" path="nombre" value="${empleado.nombre}" placeholder="Roberto Ayala"/>
 			<br>
 			<label for="edad">Edad:</label>
-			<input class="form-control" type="number" name="edad" path="edad" value="${empleado.edad}"/>
+			<form:errors path="edad" cssStyle="color: #ff0000;" />
+			<input class="form-control" type="number" name="edad" path="edad" value="${empleado.edad}" placeholder="19"/>
 			<br>
 			<label for="genero">G&eacute;nero:</label>
-			<input class="form-control" type="text" name="genero" path="genero" value="${empleado.genero}"/>
+			<form:errors path="genero" cssStyle="color: #ff0000;" />
+			<form:select class="form-control" name="genero" path="genero">
+					<c:if test="${empleado.genero == 'M'.charAt(0)}">
+						<option value="M" selected>Masculino</option>
+						<option value="F">Femenino</option>
+					</c:if>
+					<c:if test="${empleado.genero == 'F'.charAt(0)}">
+						<option value="M">Masculino</option>
+						<option value="F" selected>Femenino</option>
+					</c:if>
+					<c:if test="${empleado.genero != 'M'.charAt(0)}">
+						<option value="M">Masculino</option>
+						<option value="F">Femenino</option>
+					</c:if>
+			</form:select>
 			<br>
 			<label for="estado">Estado:</label>
+			<form:errors path="estado" cssStyle="color: #ff0000;" />
 			<div>
 				<form:radiobutton name="estado" path="estado" value="True"/>Activo<br>
 				<form:radiobutton name="estado" path="estado" value="False"/>Inactivo<br>
 			</div>
 			<br>
 			<label for="id_sucursal">Restaurante:</label>
+			<form:errors path="id_sucursal" cssStyle="color: #ff0000;" />
 			<form:select class="form-control" name="id_sucursal" path="id_sucursal">
 				<option value="-1">No asignado</option>
 				<c:forEach items="${sucursal}" var="sucursal">

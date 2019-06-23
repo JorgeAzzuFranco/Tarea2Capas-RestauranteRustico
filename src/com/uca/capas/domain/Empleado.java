@@ -7,26 +7,34 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(schema="public",name="empleado")
 public class Empleado {
-
 	@Id
 	@GeneratedValue(generator="usuario_id_usuario_seq", strategy = GenerationType.AUTO)
 	@SequenceGenerator(name = "public.usuario_id_usuario_seq", sequenceName = "public.usuario_id_usuario_seq")
 	@Column(name="codigo")
 	Integer codigo;
 	@Column(name="nombre")
+	@NotBlank
 	String nombre;
 	@Column(name="edad")
+	@Min(18)
 	Integer edad;
 	@Column(name="genero")
 	Character genero;
 	@Column(name="estado")
+	@NotNull
 	Boolean estado;
 	@Column(name="id_sucursal")
+	@Min(0)
 	Integer id_sucursal;
+	
 	public Integer getCodigo() {
 		return codigo;
 	}

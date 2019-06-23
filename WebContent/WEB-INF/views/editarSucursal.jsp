@@ -17,22 +17,28 @@
 			<input type="hidden" name="codigo" path="codigo" value="${sucursal.codigo}">
 			
 			<label  for="nombre">Nombre de sucursal:</label>
-			<input class="form-control" type="text" name="nombre" path="nombre" value="${sucursal.nombre}"/>
+			<form:errors path="nombre" cssStyle="color: #ff0000;" />
+			<input class="form-control" type="text" name="nombre" path="nombre" value="${sucursal.nombre}" placeholder="Rustico con clase"/>
 			<br>
 			<label  for="nomGerente">Nombre de gerente:</label>
-			<input class="form-control" type="text" name="nomGerente" path="nomGerente" value="${sucursal.nomGerente}"/>
+			<form:errors path="nomGerente" cssStyle="color: #ff0000;" />
+			<input class="form-control" type="text" name="nomGerente" path="nomGerente" value="${sucursal.nomGerente}" placeholder="Monica Arana"/>
 			<br>
 			<label  for="ubicacion">Ubicaci&oacute;n:</label>
-			<input class="form-control" type="text" name="ubicacion" path="ubicacion" value="${sucursal.ubicacion}"/>
+			<form:errors path="ubicacion" cssStyle="color: #ff0000;" />
+			<input class="form-control" type="text" name="ubicacion" path="ubicacion" value="${sucursal.ubicacion}" placeholder="Ave. Joplins, 3ra calle #595"/>
 			<br>
 			<label  for="nMesa">Numero de mesas en el local:</label>
-			<input class="form-control" type="text" name="nMesa" path="nMesa" value="${sucursal.nMesa}"/>
+			<form:errors path="nMesa" cssStyle="color: #ff0000;" />
+			<input class="form-control" type="text" name="nMesa" path="nMesa" value="${sucursal.nMesa}" placeholder="15"/>
 			<br>
 			<label  for="horarioInicio">Hora de inicio de actividades:</label>
-			<input class="form-control" type="text" name="horarioInicio" path="horarioInicio" value="${sucursal.horarioInicio}"/>
+			<form:errors path="horarioInicio" cssStyle="color: #ff0000;" />
+			<input class="form-control" type="text" name="horarioInicio" path="horarioInicio" value="${sucursal.horarioInicio}" placeholder="6:30"/>
 			<br>
 			<label for="horarioFin">Hora de fin de actividades:</label>
-			<input class="form-control" type="text" name="horarioFin" path="horarioFin" value="${sucursal.horarioFin}"/>
+			<form:errors path="horarioFin" cssStyle="color: #ff0000;" />
+			<input class="form-control" type="text" name="horarioFin" path="horarioFin" value="${sucursal.horarioFin}" placeholder="21:00"/>
 			<br>
 			<input class="btn btn-success btn-block" type="submit" value="Guardar cambios"/>		
 		</form:form>

@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
 
 @Entity
 @Table(schema="public",name="usuario")
@@ -13,9 +15,11 @@ public class Usuario {
 	Integer id;
 	
 	@Column(name="usuario")
+	@NotBlank
 	String usuario;
 	
 	@Column(name="clave")
+	@NotBlank
 	String clave;
 	
 	

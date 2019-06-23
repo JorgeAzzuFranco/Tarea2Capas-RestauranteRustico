@@ -14,9 +14,11 @@
 	<div class="container" style="margin: auto; padding: 5px; height: 50%; width: 20%; border: solid;border-width: 1px; border-radius: 5px; border-color: gray;">
 		<form:form action="${pageContext.request.contextPath}/login" method="post" modelAttribute="usuario">
 			<label for="usuario">Usuario:</label>
-			<form:input class="form-control" type="text" name="usuario" path="usuario"/>
+			<form:errors path="usuario" cssStyle="color: #ff0000;" />
+			<form:input class="form-control" type="text" name="usuario" path="usuario" placeholder="jbalvin"/>
 			<br>
 			<label for="password">Contrase&ntilde;a:</label>
+			<form:errors path="clave" cssStyle="color: #ff0000;" />
 			<form:input class="form-control" type="password" name="clave" path="clave"/>
 			<br>
 			<input class="btn btn-success btn-block" type="submit" value="Ingresar">
