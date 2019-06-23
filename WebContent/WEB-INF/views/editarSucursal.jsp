@@ -62,7 +62,7 @@
 						<td style="text-align: center;">${empleado.edad}</td>
 						<td style="text-align: center;">${empleado.genero}</td>
 						<td style="text-align: center;">${empleado.estado}</td>
-						<td>
+						<td style="text-align: center;">
 							<button onclick="location.href='${pageContext.request.contextPath}/editarEmpleado?codigo=${empleado.codigo}'"
 							class="btn btn-primary">Ver Perfil</button>
 							

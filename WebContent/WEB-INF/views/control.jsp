@@ -34,11 +34,13 @@
 					<td style="text-align: center;">${sucursales.ubicacion}</td>
 					<td style="text-align: center;">${sucursales.horarioInicio}</td>
 					<td style="text-align: center;">${sucursales.horarioFin}</td>
-					<td>
+					<td style="text-align: center;">
 						<button onclick="location.href='${pageContext.request.contextPath}/editarSucursal?codigo=${sucursales.codigo}'"
 						class="btn btn-primary">Ver Perfil</button>
 						<button onclick="location.href='${pageContext.request.contextPath}/borrarSucursal?codigo=${sucursales.codigo}'"
 						class="btn btn-danger">Eliminar</button>
+						<button onClick="location.href='${pageContext.request.contextPath}/agregarEmpleado?id_sucursal=${sucursales.codigo}'"
+						class="btn btn-success">Agregar Empleado</button>
 					</td>
 				</tr>
 			</c:forEach>
