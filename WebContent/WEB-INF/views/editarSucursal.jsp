@@ -33,8 +33,8 @@
 			<br>
 			<label for="horarioFin">Hora de fin de actividades:</label>
 			<input class="form-control" type="text" name="horarioFin" path="horarioFin" value="${sucursal.horarioFin}"/>
-			<br><br>
-			<input class="form-control" type="submit" value="Guardar cambios"/>		
+			<br>
+			<input class="btn btn-success btn-block" type="submit" value="Guardar cambios"/>		
 		</form:form>
 	</div>
 	

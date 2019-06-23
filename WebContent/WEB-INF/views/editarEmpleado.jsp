@@ -31,7 +31,6 @@
 				<form:radiobutton name="estado" path="estado" value="False"/>Inactivo<br>
 			</div>
 			<br>
-			
 			<label for="id_sucursal">Restaurante:</label>
 			<form:select class="form-control" name="id_sucursal" path="id_sucursal">
 				<option value="-1">No asignado</option>
@@ -44,7 +43,7 @@
 					</c:if>
 				</c:forEach>
 			</form:select>
-			<br><br>
+			<br>
 			<input class="btn btn-success btn-block" type="submit" value="Guardar cambios"/>	
 		</form:form>
 	</div>
