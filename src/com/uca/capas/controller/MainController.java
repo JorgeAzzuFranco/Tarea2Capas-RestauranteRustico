@@ -113,12 +113,11 @@ public class MainController {
 		Integer borrado = 0;
 		try {
 			borrado = sucDao.delete(codigo);
-			sucursales = getSucursales();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		mav.addObject("sucursales", sucursales);
+		mav.addObject("sucursales", getSucursales());
 		mav.setViewName("control");
 		return mav;
 		
@@ -205,6 +204,7 @@ public class MainController {
 		
 		if(br.hasErrors()) {
 			mav.addObject("empleado", empleado);
+			mav.addObject("sucursal", getSucursales());
 			mav.setViewName("editarEmpleado");
 		}
 		else {
